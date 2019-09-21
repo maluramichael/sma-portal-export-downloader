@@ -1,0 +1,8 @@
+node_modules/
+data/
+.idea/
+.vscode/
+/temp/
+session.txt
+yarn-error.log
+.DS_Store
