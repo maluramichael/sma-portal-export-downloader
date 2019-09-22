@@ -16,11 +16,12 @@ extract_zip_and_create_csv_and_export() {
   zip=$1
   filename=$(basename -- "$zip")
   name="${filename%.*}"
-  echo "Extract $name"
   mkdir -p "temp/$name"
+
+  echo "Extract $name"
   unzip -qo "$zip" -d "temp/$name"
-  content=$(sed -e '1,8d' -e '$ d' "temp/$name/$name.CSV")
-  for csv in temp/"$name"/*.0*; do
+  content=""
+  for csv in temp/"$name"/*; do
     csv_content=$(sed -e '1,8d' -e '$ d' "$csv")
     if [ -n "$csv_content" ]; then
       content="${content}\n${csv_content}"
@@ -69,11 +70,9 @@ extract_zip_and_create_csv_and_export() {
 # )
 
 # export everything in series
-for zip in $DATA_DIR*.ZIP; do
-  extract_zip_and_create_csv_and_export "$zip"
-done
+# for zip in $DATA_DIR*.ZIP; do
+#   extract_zip_and_create_csv_and_export "$zip"
+# done
 
 # export latest zip file
-last_zip=$(find $DATA_DIR*.ZIP | sort | tail -1)
-extract_zip_and_create_csv_and_export "$last_zip"
-rm -f $last_zip
+extract_zip_and_create_csv_and_export "${DATA_DIR}today.ZIP"
