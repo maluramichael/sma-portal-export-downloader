@@ -58,17 +58,22 @@ extract_zip_and_create_csv_and_export() {
   echo "$content" >"temp/$name.csv"
 }
 
-# export everything
-N=8
-(
-  for zip in $DATA_DIR*.ZIP; do
-    ((i = i % N))
-    ((i++ == 0)) && wait
-    extract_zip_and_create_csv_and_export "$zip" &
-  done
-)
+# export everything parallel
+# N=8
+# (
+#   for zip in $DATA_DIR*.ZIP; do
+#     ((i = i % N))
+#     ((i++ == 0)) && wait
+#     extract_zip_and_create_csv_and_export "$zip" &
+#   done
+# )
+
+# export everything in series
+for zip in $DATA_DIR*.ZIP; do
+  extract_zip_and_create_csv_and_export "$zip"
+done
 
 # export latest zip file
-# last_zip=$(find $DATA_DIR*.ZIP | sort | tail -1)
-# extract_zip_and_create_csv_and_export "$last_zip"
-# rm -f $last_zip
+last_zip=$(find $DATA_DIR*.ZIP | sort | tail -1)
+extract_zip_and_create_csv_and_export "$last_zip"
+rm -f $last_zip
