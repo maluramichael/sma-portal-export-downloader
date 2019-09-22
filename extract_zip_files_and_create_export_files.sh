@@ -59,6 +59,10 @@ extract_zip_and_create_csv_and_export() {
   echo "$content" >"temp/$name.csv"
 }
 
+# export latest zip file
+extract_zip_and_create_csv_and_export "${DATA_DIR}today.ZIP"
+rm "${DATA_DIR}today.ZIP"
+
 # export everything parallel
 # N=8
 # (
@@ -73,6 +77,3 @@ extract_zip_and_create_csv_and_export() {
 # for zip in $DATA_DIR*.ZIP; do
 #   extract_zip_and_create_csv_and_export "$zip"
 # done
-
-# export latest zip file
-extract_zip_and_create_csv_and_export "${DATA_DIR}today.ZIP"
