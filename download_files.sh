@@ -92,10 +92,10 @@ files=$(curl -s -k -X POST -H "Content-Type: application/json" -d "{\"destDev\":
 files=$(echo $files | jq -r ".result[.result | keys[0]][\"$REPORTS\"] | map_values(.f) | .[]" | grep -v ZIP | sort -h)
 first_file=$(echo $files | cut -d ' ' -f1)
 name="${first_file%.*}"
-echo "Create dir temp/$name"
-mkdir -p temp/$name
+echo "Create dir temp/today"
+mkdir -p temp/today
 for file in $files; do
-  DEST=temp/$name/$file
+  DEST=temp/today/$file
   SOURCE=$PORTAL/fs$REPORTS$file
   echo "Download $SOURCE to $DEST"
   curl -s -k -X POST -H "Content-Type: application/json" -d "{}" "$SOURCE?sid=$session" --output "$DEST"
@@ -103,7 +103,7 @@ done
 
 # create zip for the current day
 echo "Create zip from data of the current day"
-zip -j data$REPORTS$name.ZIP temp/$name/*
+zip -j data${REPORTS}today.ZIP temp/today/*
 
 # logout current session
 echo "Logout"
