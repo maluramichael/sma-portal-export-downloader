@@ -9,6 +9,8 @@ fi
 
 DATA_DIR="data$REPORTS"
 
+mkdir -p temp/influx
+
 # extract downloaded zip files and merge the content to a single csv file
 extract_zip_and_create_csv_and_export() {
   zip=$1
@@ -50,7 +52,7 @@ extract_zip_and_create_csv_and_export() {
       fi
 
       ts="${ts}000000000"
-      echo "power,type=production,source=pv min=$min,avg=$avg,max=$max $ts" >>"temp/$name.export.txt"
+      echo "power,type=production,source=pv min=$min,avg=$avg,max=$max $ts" >>"temp/influx/$name.txt"
     fi
   done <<<"$content"
   echo "$content" >"temp/$name.csv"
@@ -70,15 +72,3 @@ N=8
 # last_zip=$(find $DATA_DIR*.ZIP | sort | tail -1)
 # extract_zip_and_create_csv_and_export "$last_zip"
 # rm -f $last_zip
-
-# combine all exports to one big export
-for file in temp/*.export.txt; do cat $file >>"temp/write_influx_via_curl.txt"; done
-
-# create influx export
-echo "# DDL" >"temp/influx_export.txt"
-echo "CREATE DATABASE vault" >>"temp/influx_export.txt"
-echo "" >>"temp/influx_export.txt"
-echo "# DML" >>"temp/influx_export.txt"
-echo "# CONTEXT-DATABASE: vault" >>"temp/influx_export.txt"
-echo "" >>"temp/influx_export.txt"
-for file in temp/*.export.txt; do cat $file >>"temp/influx_export.txt"; done
