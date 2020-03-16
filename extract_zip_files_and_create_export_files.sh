@@ -11,7 +11,7 @@ TMP_DIR="/tmp/sma"
 TODAY_ZIP="$DATA_DIR/$REPORTS/DA$DATE.ZIP"
 
 usage() {
-  echo "Usage: $0 <-p PORTAL> [-r REPORTS] [-g GROPU] <-x PASSWORD>" 1>&2
+  echo "Usage: $0 [-r REPORTS]" 1>&2
 }
 
 exit_abnormal() {

@@ -145,7 +145,7 @@ FILES=$(curl -s -k -X POST -H "Content-Type: application/json" -d "{\"destDev\":
 ARCHIVES=$(echo "$FILES" | jq -r ".result[.result | keys[0]][\"$SMA_FS_REPORT_PATH\"] | map_values(.f) | .[]" | grep ZIP | sort -h)
 LIVE_FILES=$(echo "$FILES" | jq -r ".result[.result | keys[0]][\"$SMA_FS_REPORT_PATH\"] | map_values(.f) | .[]" | grep -v ZIP | sort -h)
 FIRST_LIVE_FILE=$(echo "$LIVE_FILES" | cut -d" " -f1)
-TODAY_FILE_NAME="${FIRST_LIVE_FILE%.*}"
+TODAY_FILE_NAME="${FIRST_LIVE_FILE%%.*}"
 LIVE_DIR="${DATA_DIR%/}/${REPORTS}/$TODAY_FILE_NAME"
 
 if [[ $DOWNLOAD_LIVE -eq 1 ]]; then
