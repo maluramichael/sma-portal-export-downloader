@@ -1,4 +1,10 @@
-#!/bin/bash
+#!/usr/bin/env bash
+set -o errexit
+set -o pipefail
+set -o nounset
 
-# send export to influx
-curl -i -XPOST 'http://192.168.178.100:8086/write?db=vault&time_precision=s' --data-binary @temp/write_influx_via_curl.txt
+TMP_DIR="/tmp/sma"
+
+# combine all exports to one big export
+find $TMP_DIR -type f -iname "*.influx" -exec curl -i -XPOST 'http://192.168.178.2:8086/write?db=vault&time_precision=s' --data-binary @{} \;
+find $TMP_DIR -type f -iname "*.influx" -delete
