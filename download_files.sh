@@ -62,6 +62,10 @@ login_session() {
 logout_session() {
   echo "Logout existing session $SESSION"
   result=$(curl -s -k -X POST -H "Content-Type: application/json" -d "{}" "$PORTAL/dyn/logout.json?sid=$SESSION")
+  if [[ -f "$SESSION_PATH" ]]; then
+    rm $SESSION_PATH
+  fi
+
   echo "$result"
 }
 
