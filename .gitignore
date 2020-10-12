@@ -6,3 +6,4 @@ data/
 session.txt
 yarn-error.log
 .DS_Store
+__pycache__
