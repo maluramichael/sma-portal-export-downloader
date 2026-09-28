@@ -1,5 +1,10 @@
 # sma-portal-export-downloader
 
+<!-- links:start -->
+[![Support me on Ko-fi](https://malura.de/assets/badge/kofi.svg)](https://malura.de/go/kofi?ref=sma-portal-export-downloader)
+[![Check out my page](https://malura.de/assets/badge/malura.svg)](https://malura.de/go/site?ref=sma-portal-export-downloader)
+<!-- links:end -->
+
 Download every export from the SMA Sunny Portal
 
 The following devices are tested:
